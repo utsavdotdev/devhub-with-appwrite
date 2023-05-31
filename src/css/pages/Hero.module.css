@@ -1,0 +1,125 @@
+.hero_container {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 4.8rem);
+  color: var(--text);
+  padding: 4rem 2rem;
+  justify-content: center;
+}
+.center_con {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+.top_text {
+  color: var(--light-text);
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  margin-bottom: -1rem;
+}
+.center_text {
+  font-size: 3rem;
+  font-weight: 800;
+  width: 75%;
+  text-align: center;
+  line-height: 3.8rem;
+}
+.bottom_text {
+  font-size: 1.3rem;
+  font-weight: 400;
+  width: 55%;
+  text-align: center;
+  margin-top: 0.5rem;
+  line-height: 1.8rem;
+}
+.glow {
+  color: var(--primary);
+}
+.mid_con {
+  display: flex;
+  padding: 2rem;
+  justify-content: center;
+}
+.box {
+  border-radius: 8px;
+  width: 70%;
+  height: 550px;
+  margin-top: -8rem;
+  background: linear-gradient(247.7deg, #00c9ff 0%, #92fe9d 71.88%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img_con {
+  width: 85%;
+  height: 85%;
+  background-color: var(--bg);
+  border-radius: 4px;
+}
+.img_con img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.bottom_con {
+  padding: 2rem 4rem;
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.text_con {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.heading {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 3.5rem;
+}
+.label {
+  color: var(--light-text);
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+}
+.features_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+}
+.feature_box {
+  height: 200px;
+  border-radius: 8px;
+  border: 2px solid var(--light-text);
+  padding: 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  cursor: pointer;
+}
+.feature_title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 2rem;
+}
+.feature_desc {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--light-text);
+  line-height: 1.5rem;
+}
+.feature_icon {
+  font-size: 1.5rem;
+  color: var(--text);
+}
+.gradient {
+  background: -webkit-linear-gradient(247.7deg, #00c9ff 0%, #92fe9d 71.88%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

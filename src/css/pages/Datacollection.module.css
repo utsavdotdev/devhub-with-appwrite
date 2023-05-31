@@ -1,0 +1,54 @@
+nav {
+  width: 100%;
+  padding: 30px 50px;
+  font-size: 20px;
+}
+nav .logo {
+  color: var(--text);
+}
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+header {
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header span {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+header .complete_profile_img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  -webkit-user-drag: none;
+  object-fit: cover;
+}
+
+.from_data_collection {
+  width: 35%;
+}
+
+.from_data_collection .row_send {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.from_data_collection .common {
+  margin-bottom: 10px;
+}
+.register_btn_con {
+  margin: 30px 0;
+}

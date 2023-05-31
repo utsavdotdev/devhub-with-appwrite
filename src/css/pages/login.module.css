@@ -1,0 +1,118 @@
+.container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+.left {
+  width: 40%;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 50px;
+}
+.left header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logo_wrapper {
+  background-color: var(--primary);
+  margin-bottom: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  font-size: 32px;
+  color:var(--text);
+  cursor: pointer;
+}
+.left header h3 {
+  font-size: 23px;
+  color: var(--text);
+  /* font-weight: 500; */
+}
+.left header p {
+  font-size: 13px;
+  color: #c1c1c1;
+}
+
+form {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+/* selct placeholder of input */
+.form_auth input::placeholder {
+  color: #cccccc;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.form_auth .login_btn {
+  font-weight: 500 !important;
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: var(--text) !important;
+}
+.form_auth .googleBth {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+}
+.form_auth .googleBth img {
+  height: 30px;
+  width: 30px;
+}
+.divider {
+  display: flex;
+  align-items: center;
+}
+.divider .line {
+  flex: 1;
+  outline: 0.5px solid #344454;
+}
+.divider p {
+  padding: 0 10px;
+  color: #344454;
+}
+
+.right {
+  width: 60%;
+  background-image: linear-gradient(45deg, #00c9ff, #92fe9d);
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+.auth_img{
+  width: 80%;
+  height: 500px;
+  animation: updown 2s ease-in-out infinite;
+}
+
+/*make the auth_img updown animatiom*/
+@keyframes updown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
