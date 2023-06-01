@@ -4,10 +4,10 @@ import Sidebar from "../components/Sidebar";
 import Other from "../components/Other";
 
 const NavOnly = () => {
-  let token = localStorage.getItem("token");
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
+  // let token = localStorage.getItem("token");
+  // if (!token) {
+  //   return <Navigate to="/" replace />;
+  // }
 
   return (
     <>

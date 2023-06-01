@@ -1,0 +1,6 @@
+.search_container{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}

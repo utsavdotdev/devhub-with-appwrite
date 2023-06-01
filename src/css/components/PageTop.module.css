@@ -1,0 +1,13 @@
+.page_top_con{
+    display: flex;
+    border-bottom: 1px solid var(--light-text);
+    align-items: center;
+    padding-inline: 4px;
+    padding-block:0.8rem;
+}
+.label{
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-inline: 1rem;
+}
