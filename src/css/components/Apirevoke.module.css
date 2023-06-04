@@ -1,0 +1,19 @@
+.header_api {
+  width: 100%;
+  padding: 0 1rem;
+  color: var(--text);
+}
+
+.header_api .info {
+  color: var(--text);
+  margin-top: 30px;
+  /* font-size: 20px; */
+}
+.header_api .input_con {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  /* width: 50%; */
+  /* outline: 1px solid red; */
+  margin-bottom: 20px;
+}

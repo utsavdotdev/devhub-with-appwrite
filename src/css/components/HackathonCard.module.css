@@ -1,0 +1,86 @@
+.hack_card {
+  width: 100%;
+  border-bottom: 0.5px solid var(--border);
+  padding: 20px 20px 5px 20px;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.wrapper {
+  display: flex;
+  gap: 4px;
+}
+
+.hack_card .hack_left {
+  width: 75%;
+  gap: 18px;
+  display: flex;
+}
+
+.hack_left img {
+  height: 110px;
+  width: 205px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+.hack_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+.hack_info .tittle {
+  width: 100%;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+}
+.hack_info .days_left {
+  font-size: 14px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  border-radius: 50vw;
+  background-color: #16e9a338;
+  max-width: fit-content;
+  padding: 5px 14px;
+  border: 2px solid var(--primary);
+}
+.participents {
+  display: flex;
+  gap: 5px;
+}
+.participents span {
+  color: var(--text);
+}
+.participents .seperate {
+  color: var(--light-text);
+}
+.hack_right {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.hack_right .btn_hack {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.bottom {
+  display: flex;
+  gap: 1rem;
+}
+.source {
+  display: flex;
+  gap: 1px;
+  align-items: center;
+  color: var(--light-text);
+}
+
+.source span {
+  font-size: 15px;
+}

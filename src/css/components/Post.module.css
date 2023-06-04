@@ -1,0 +1,131 @@
+.post_container {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--light-text);
+  transition: 0.3s;
+  flex-direction: column;
+}
+.devit {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--light-text);
+  font-family: "Poppins", sans-serif;
+  padding-left: 4.5rem;
+  margin-top: 10px;
+  line-height: 10px;
+}
+.wrapper {
+  padding: 1rem;
+  gap: 0.8rem;
+  display: flex;
+  margin-top: -4px;
+}
+.post_container:hover {
+  background-color: var(--hover);
+}
+.post_right {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: -5px;
+}
+.info_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.post_left{
+  margin-top: 1px;
+}
+.info {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.info_name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.green_tick {
+  color: var(--primary);
+  font-size: 20px;
+  margin-top: 5px;
+}
+.username {
+  font-size: 16px;
+  color: var(--light-text);
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+.dot {
+  width: 3px;
+  height: 3px;
+  background-color: var(--light-text);
+  border-radius: 50%;
+  margin-inline: 2px;
+}
+.time {
+  font-size: 16px;
+  color: var(--light-text);
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+.action_con {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 8px;
+}
+.like,
+.comment,
+.retweet {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--light-text);
+  cursor: pointer;
+  margin-left: -1.5rem;
+}
+/*style the lightbox*/
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lightbox img {
+  /*twitter lightbox*/
+  max-width: 50%;
+  max-height: 100%;
+  object-fit: cover;
+  /*center the image using transform*/
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.lightbox_close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.codeBlock {
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+}

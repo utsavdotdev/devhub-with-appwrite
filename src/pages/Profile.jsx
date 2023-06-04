@@ -1,9 +1,35 @@
-import React from 'react'
+import React, { useContext, useEffect } from "react";
+import ProfileHeader from "../components/ProfileHeader";
+import Post from "../components/Post";
+import { ContextProvider } from "../config/Context";
+
 
 const Profile = () => {
-  return (
-    <div>Profile</div>
-  )
-}
+  const token = localStorage.getItem("token");
+  const [mydevits, setMyDevits] = React.useState([]);
 
-export default Profile
+  useEffect(() => {
+    fetchMyDevits();
+  }, []);
+
+  const fetchMyDevits = async () => {
+   
+  };
+
+  return (
+    <>
+      <ProfileHeader />
+      <div
+        style={{
+          marginTop: "-20px",
+        }}
+      >
+        {mydevits?.map((data) => (
+          <Post key={data._id} data={data} />
+        ))}
+      </div>
+    </>
+  );
+};
+
+export default Profile;

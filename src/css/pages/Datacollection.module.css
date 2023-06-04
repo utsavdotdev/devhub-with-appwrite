@@ -21,7 +21,23 @@ header {
   flex-direction: column;
   align-items: center;
 }
+.avatar_wrapper{
+  padding-inline: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.left_arrow, .right_arrow{
+  cursor: pointer;
+  color: var(--primary);
+  font-size: 2rem;
+  transition: all 0.2s ease-in-out;
+}
+/* hover effect */
+.left_arrow:hover, .right_arrow:hover{
+  scale:1.1;
 
+}
 header span {
   font-size: 20px;
   margin-bottom: 20px;

@@ -1,0 +1,36 @@
+.readme_con{
+    display: flex;
+    width: 95%;
+    border: 1px solid var(--overlay);
+    margin-block: 2rem;
+    padding: 1rem 14px;
+    margin-inline: auto;
+    border-radius: 8px;
+    height: fit-content;
+    flex-direction: column;
+    gap: 1rem;
+}
+.title{
+    font-size: 18px;
+    color: var(--text);
+    font-weight: 500;
+    margin-top: -5px;
+    display: flex;
+    align-items: center;
+}
+.api_list{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.api{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.desc{
+   font-size: 16px;
+   color: var(--text);
+   font-family: "Poppins", sans-serif;
+   letter-spacing: 0.5px;
+}

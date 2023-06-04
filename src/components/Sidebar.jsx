@@ -10,6 +10,8 @@ import { HiUserCircle, HiOutlineUserCircle } from "react-icons/hi";
 import { IoSettingsSharp, IoSettingsOutline } from "react-icons/io5";
 import { NavLink, useLocation } from "react-router-dom";
 import { ContextProvider } from "../config/Context";
+import Avatar, { genConfig } from "react-nice-avatar";
+
 
 const Sidebar = () => {
   const { userDetails } = useContext(ContextProvider);
@@ -55,7 +57,8 @@ const Sidebar = () => {
       link: "/api",
     },
   ];
-  const name = user?.firstname + " " + user?.lastname;
+
+  const config = genConfig(user?.avatar);
   return (
     <>
       <div className={styles.sidebar_container}>
@@ -112,14 +115,10 @@ const Sidebar = () => {
           </Button>
           <div className={styles.profile_handle}>
             <div className={styles.profile}>
-              <img
-                src={user?.avatar}
-                alt="profile"
-                className={styles.profile_img}
-              />
+              <Avatar style={{ width: "45px", height: "45px" }} {...config} />
             </div>
             <div className={styles.name_con}>
-              <div className={styles.name}>{name}</div>
+              <div className={styles.name}>{user?.firstname + " " + user?.lastname}</div>
               <div className={styles.username}>@{user?.username}</div>
             </div>
           </div>

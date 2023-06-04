@@ -1,49 +1,105 @@
 import React, { useEffect, useState } from "react";
 import style from "../css/pages/Datacollection.module.css";
 import { BsArrowRight, BsMicFill, BsFillBookFill } from "react-icons/bs";
+import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Button } from "@pankod/refine-mui";
 import { TextField } from "@pankod/refine-mui";
-import { useParams, useLocation, NavLink } from "react-router-dom";
+import { useParams, useLocation, NavLink, useNavigate } from "react-router-dom";
+import { account, database } from "../appwrite/appwriteConfig";
+import Avatar, { genConfig } from "react-nice-avatar";
+import { v4 as uuidv4 } from "uuid";
+import { pics } from "../config/data";
+import { toast } from "react-hot-toast";
+import moment from "moment";
+
 const DataCollection = () => {
-  // let token = localStorage.getItem("token");
+  let token = localStorage.getItem("token");
   // useEffect(() => {
   //   if (token) {
   //     window.location.href = "/app";
   //   }
   // }, [token]);
   // uselocation
-  // const { state } = useLocation();
-  // const { res } = state;
-  // const { id } = useParams();
-  // handle local state
+  const { id } = useParams();
   const [details, setdetails] = useState({
-    // firstname: res.givenName,
-    // lastname: res.familyName,
-    // bio: "I am full stack developer.",
-    // username: "",
-    // email: res.email,
     firstname: "",
     lastname: "",
     bio: "",
     username: "",
     email: "",
+    avatar: "",
   });
+  const db_id = import.meta.env.VITE_DATABASE_ID;
+  const user_id = import.meta.env.VITE_USER_COLLECTION_ID;
+  const [config, setconfig] = useState({});
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  const loadUser = async () => {
+    try {
+      const res = await account.get();
+      setdetails({
+        ...details,
+        email: res.email,
+      });
+      const getUser = database.listDocuments(db_id, user_id);
+      getUser.then((res) => {
+        res.documents.map((doc) => {
+          if (doc.uid === id) {
+            console.log("User already registered");
+            return (window.location.href = "/app");
+          }
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const navigate = useNavigate();
+  const swapAvatar = () => {
+    const randomWord = Math.random().toString(36).substring(7);
+    setconfig(genConfig(randomWord));
+    setdetails({ ...details, avatar: randomWord });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setdetails({ ...details, [name]: value });
   };
 
-  // generare unique username based on firstname and lastname
-  // useEffect(() => {
-  //   const username =
-  //     details.firstname.toLowerCase() + "_" + details.lastname.toLowerCase();
-  //   setdetails({ ...details, username });
-  // }, [details.firstname, details.lastname]);
-
   const handleSubmit = async (e) => {
     try {
-    } catch (error) {}
+      if (
+        details.firstname === "" ||
+        details.lastname === "" ||
+        details.bio === "" ||
+        details.username === "" ||
+        details.email === ""
+      ) {
+        return toast.error("Please fill all the fields");
+      }
+      const res = await database.createDocument(db_id, user_id, uuidv4(), {
+        uid: id,
+        firstname: details.firstname,
+        lastname: details.lastname,
+        bio: details.bio,
+        username: details.username,
+        email: details.email,
+        avatar: details.avatar,
+        verified: false,
+        createdAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      });
+      //check if user is created
+      if (res.$id) {
+        toast.success("User created successfully!");
+        //go the /app page removing the current page from history
+        navigate("/app", { replace: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -56,11 +112,11 @@ const DataCollection = () => {
       <div className={style.container}>
         <header>
           <span>Complete your profile!</span>
-          <img
-            className={style.complete_profile_img}
-            src={"/pic.jpg"}
-            alt="profile"
-          />
+          <div className={style.avatar_wrapper}>
+            <FaCaretLeft className={style.left_arrow} onClick={swapAvatar} />
+            <Avatar style={{ width: "160px", height: "160px" }} {...config} />
+            <FaCaretRight className={style.right_arrow} onClick={swapAvatar} />
+          </div>
         </header>
         <form className={style.from_data_collection}>
           {/* username feild */}

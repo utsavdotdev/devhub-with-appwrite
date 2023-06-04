@@ -1,22 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import style from "../css/pages/login.module.css";
 import { Button } from "@pankod/refine-mui";
 import { TextField } from "@pankod/refine-mui";
 import { Navigate, useNavigate } from "react-router-dom";
 import { SiCodemagic } from "react-icons/si";
+import { account } from "../appwrite/appwriteConfig";
+import { toast } from "react-hot-toast";
+import { ContextProvider } from "../config/Context";
+import {v4 as uuidv4} from "uuid";
 
 const Auth = () => {
+  const { userDetails } = useContext(ContextProvider);
+  const [user, setuser] = userDetails;
+  const token = localStorage.getItem("token");
 
-  // let token = localStorage.getItem("token");
-  // useEffect(() => {
-  //   if (token) {
-  //     return <Navigate to="/app" replace />;
-  //   }
-  // }, [token]);
- 
+  if (token) {
+    return <Navigate to="/app" replace />;
+  }
 
-  const signIn = () => {}
- 
+  const signIn = (e) => {
+    e.preventDefault();
+    const uid = uuidv4();
+    try {
+      account.createOAuth2Session(
+        "google",
+        `http://localhost:5173/complete/${uid}`,
+        "http://localhost:5173/join"
+      );
+      localStorage.setItem("token", uid);
+    } catch (e) {
+      toast.error("Something went wrong!");
+    }
+  };
+
   return (
     <div className={style.container}>
       <div className={style.left}>
