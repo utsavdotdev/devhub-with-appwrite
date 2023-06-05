@@ -39,16 +39,17 @@ const DataCollection = () => {
 
   const loadUser = async () => {
     try {
-      const res = await account.get();
+      const resp = await account.get();
       setdetails({
         ...details,
-        email: res.email,
+        email: resp.email,
       });
       const getUser = database.listDocuments(db_id, user_id);
       getUser.then((res) => {
+        console.log(resp?.email);
         res.documents.map((doc) => {
-          if (doc.uid === id) {
-            console.log("User already registered");
+          if (doc.email === resp?.email) {
+            localStorage.setItem("token", doc.uid);
             return (window.location.href = "/app");
           }
         });
@@ -91,10 +92,9 @@ const DataCollection = () => {
         verified: false,
         createdAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
       });
-      //check if user is created
       if (res.$id) {
         toast.success("User created successfully!");
-        //go the /app page removing the current page from history
+        localStorage.setItem("token", id);
         navigate("/app", { replace: true });
       }
     } catch (error) {

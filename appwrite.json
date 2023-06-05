@@ -1,0 +1,21 @@
+{
+    "projectId": "645e01c1c2b3de057a27",
+    "projectName": "Devhub ",
+    "functions": [
+        {
+            "$id": "647dbec7bc497d6e23ed",
+            "name": "Blogs crawler",
+            "runtime": "node-16.0",
+            "path": "functions/Blogs crawler",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        }
+    ]
+}

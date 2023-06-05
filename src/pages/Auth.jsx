@@ -22,12 +22,11 @@ const Auth = () => {
     e.preventDefault();
     const uid = uuidv4();
     try {
-      account.createOAuth2Session(
+      const res = account.createOAuth2Session(
         "google",
         `http://localhost:5173/complete/${uid}`,
         "http://localhost:5173/join"
       );
-      localStorage.setItem("token", uid);
     } catch (e) {
       toast.error("Something went wrong!");
     }
