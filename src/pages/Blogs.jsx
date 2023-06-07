@@ -2,17 +2,26 @@ import React, { useEffect } from "react";
 import BlogCard from "../components/BlogCard";
 import PageTop from "../components/PageTop";
 import Loader from "../components/Loader";
+import { database } from "../appwrite/appwriteConfig";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const blog_id = import.meta.env.VITE_BLOGS_COLLECTION_ID;
+  const db_id = import.meta.env.VITE_DATABASE_ID;
 
   useEffect(() => {
     getBlogs();
   }, []);
 
   const getBlogs = async () => {
-    
+    try {
+      const res = await database.listDocuments(db_id, blog_id);
+      if (res?.documents?.length > 0) {
+        setLoading(false);
+        setBlogs(res.documents);
+      }
+    } catch (error) {}
   };
   return (
     <>

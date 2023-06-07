@@ -4,27 +4,17 @@ import { BsBook } from "react-icons/bs";
 import { SiJsonwebtokens } from "react-icons/si";
 import { Tooltip } from "@pankod/refine-mui";
 const BlogCard = ({ blog }) => {
-  function makeURL(author, slug) {
-    if (!author.publicationDomain) {
-      return `https://${author.username}.hashnode.dev/${slug}`;
-    }
-    return `https://${author.publicationDomain}/${slug}`;
-  }
-
-  function getBlogDate(date) {
-    return new Date(date).toDateString();
-  }
   return (
     <>
-      <a target={"_blank"} href={makeURL(blog?.author, blog?.slug)}>
+      <a target={"_blank"} href={blog?.url}>
         <div className={style.blog_card}>
           <div className={style.card_header}>
             <div className={style.profile_img_left}>
-              <img src={blog?.author.photo} alt="profile" />
+              <img src={blog?.user_image} alt="profile" />
             </div>
             <div className={style.right_details}>
-              <p className={style.name}>{blog?.author.name}</p>
-              <p className={style.date}>{getBlogDate(blog?.dateAdded)}</p>
+              <p className={style.name}>{blog?.user_name}</p>
+              <p className={style.date}>{blog?.date}</p>
             </div>
           </div>
           <div className={style.card_body}>
@@ -41,7 +31,7 @@ const BlogCard = ({ blog }) => {
                   }}
                 >
                   <span>
-                    <BsBook /> {blog?.readTime} min
+                    <BsBook /> {blog?.read_time} min
                   </span>
                 </Tooltip>
 
@@ -63,7 +53,7 @@ const BlogCard = ({ blog }) => {
             </div>
 
             <div className={style.right}>
-              <img src={blog?.coverImage} alt="blog_cover_img" />
+              <img src={blog?.image} alt="blog_cover_img" />
             </div>
           </div>
         </div>
