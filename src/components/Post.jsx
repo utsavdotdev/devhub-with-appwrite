@@ -1,5 +1,4 @@
 import {
-  Avatar,
   IconButton,
   Menu,
   MenuItem,
@@ -20,6 +19,8 @@ import { ContextProvider } from "../config/Context";
 import { toast } from "react-hot-toast";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import Avatar, { genConfig } from "react-nice-avatar";
+
 
 const Post = ({ data }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -35,6 +36,9 @@ const Post = ({ data }) => {
   );
   const { userDetails } = useContext(ContextProvider);
   const [user, setUser] = userDetails;
+
+    const config = genConfig(data?.avatar);
+
 
   useEffect(() => {
     //check if the token is equal to the array of likes object userid
@@ -80,7 +84,7 @@ const Post = ({ data }) => {
    
   };
 
-  const goLink = `/devit/${data?._id}`;
+  const goLink = `/devit/${data?.$id}`;
 
   return (
     <>
@@ -114,7 +118,7 @@ const Post = ({ data }) => {
         {reDevit && <span className={styles.devit}>You Redevited</span>}
         <div className={styles.wrapper}>
           <div className={styles.post_left}>
-            <Avatar src={data?.avatar} sx={{ width: "45px", height: "45px" }} />
+            <Avatar style={{ width: "45px", height: "45px" }} {...config} />
           </div>
           <div className={styles.post_right}>
             <div className={styles.info_top}>
@@ -235,7 +239,7 @@ const Post = ({ data }) => {
                       ),
                   }}
                 ></Typography>
-                {data?.image !== "" && (
+                {data?.image !== null && (
                   <Card
                     //make the image responsive
                     sx={{

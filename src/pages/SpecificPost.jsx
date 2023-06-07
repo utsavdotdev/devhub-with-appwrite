@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "../css/pages/SpecificPost.module.css";
-import { Avatar, Button, IconButton, InputBase } from "@pankod/refine-mui";
+import { Button, IconButton, InputBase } from "@pankod/refine-mui";
 import { BiArrowBack } from "react-icons/bi";
 import Post from "../components/Post";
 import Comment from "../components/Comment";
@@ -9,6 +9,9 @@ import { ContextProvider } from "../config/Context";
 import moment from "moment";
 import Loader from "../components/Loader";
 import { toast } from "react-hot-toast";
+import { database } from "../appwrite/appwriteConfig";
+import Avatar, { genConfig } from "react-nice-avatar";
+
 const SpecificPost = () => {
   const { userDetails } = useContext(ContextProvider);
   const [user, setuser] = userDetails;
@@ -19,12 +22,21 @@ const SpecificPost = () => {
   const [data, setData] = React.useState({});
   const [trigger, settrigger] = useState(false);
 
+  const db_id = import.meta.env.VITE_DATABASE_ID;
+  const devit_id = import.meta.env.VITE_DEVIT_COLLECTION_ID;
+
   useEffect(() => {
     fetchDevit();
   }, [trigger, id]);
 
   const fetchDevit = async () => {
-   
+    try {
+      const res = await database.getDocument(db_id, devit_id, id);
+      setData(res);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
   if (loading) return <Loader height="80vh" />;
 
@@ -33,9 +45,9 @@ const SpecificPost = () => {
   };
 
   // create a comment
-  const createComment = async () => {
-    
-  };
+  const createComment = async () => {};
+
+  const config = genConfig(user?.avatar);
 
   return (
     <>
@@ -54,13 +66,7 @@ const SpecificPost = () => {
         </div>
         <Post data={data} />
         <div className={styles.post_comment}>
-          <Avatar
-            src={user?.avatar}
-            sx={{
-              width: "45px",
-              height: "45px",
-            }}
-          />
+          <Avatar style={{ width: "45px", height: "45px" }} {...config} />
           <InputBase
             sx={{
               flex: 1,
