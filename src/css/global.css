@@ -87,3 +87,40 @@ button {
 .main_container::-webkit-scrollbar {
   display: none;
 }
+
+
+/*for img load*/
+.loading_img {
+  filter: blur(10px);
+  clip-path: inset(0);
+}
+
+.loaded_img {
+  filter: blur(0px);
+  transition: filter 0.5s linear;
+}
+
+/* code mirror css */
+.CodeMirror {
+  width: 100%;
+  height: auto;
+  font-size: 15px;
+  line-height: 1.6;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  letter-spacing: 1.2px;
+  cursor: auto;
+  font-family: "Fira Code", monospace;
+  font-weight: 400 !important;
+  border-radius: 5px;
+  width: 100%;
+}
+/* select gutter */
+
+.CodeMirror-wrap pre {
+  word-break: break-word;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}

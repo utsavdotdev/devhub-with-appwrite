@@ -89,91 +89,51 @@ function Devit() {
   };
 
   const handleDevit = async () => {
-    // if (value.content === "" && value.code === "") {
-    //   toast.error("Please enter some content");
-    //   return;
-    // }
+    if (value.content === "" && value.code === "") {
+      toast.error("Please enter some content");
+      return;
+    }
     try {
-      if (img !== null) {
         setLoading(true);
-        const imageUpload = await storage.createFile(bucket_id, uuidv4(), file);
-        if (imageUpload?.$id !== null) {
-          const imageUrl = await storage.getFilePreview(bucket_id,imageUpload.$id);
-          const devit = await database.createDocument(db_id,devit_id, uuidv4(), {});
-          if (devit?.$id !== null) {
-            setLoading(false);
-            toast.success("Devit posted successfully");
-            setValue({
-              content: "",
-              code: "",
-              image: "",
-            });
-            setImg(null);
-            return window.location.reload();
+        let imageUrl = {};
+        if (img !== null) {
+          const imageUpload = await storage.createFile(
+            bucket_id,
+            uuidv4(),
+            file
+          );
+          if (imageUpload?.$id !== null) {
+            imageUrl = await storage.getFilePreview(bucket_id, imageUpload.$id);
           }
         }
-
-        //Devit post
-
-        // const res = await provider.post("/devit/post", {
-        //   userid: user?._id,
-        //   content: value.content,
-        //   code: value.code,
-        //   image: imgRes.data.url,
-        //   name:
-        //     user?.firstname.charAt(0).toUpperCase() +
-        //     user?.firstname.slice(1) +
-        //     " " +
-        //     user?.lastname.charAt(0).toUpperCase() +
-        //     user?.lastname.slice(1),
-        //   username: user?.username,
-        //   avatar: user?.avatar,
-        //   status: "new",
-        //   verified: user?.verified,
-        //   createdAt: moment().format("MMM Do YY"),
-        // });
-
-        // if (res.status === 201) {
-        // setLoading(false);
-        // toast.success("Devit posted successfully");
-        // setValue({
-        //   content: "",
-        //   code: "",
-        //   image: "",
-        // });
-        // setImg(null);
-        // return window.location.reload();
-        // }
-        // }
-      }
-      // const res = await provider.post("/devit/post", {
-      //   userid: user?._id,
-      //   content: value.content,
-      //   code: value.code,
-      //   image: "",
-      //   name:
-      //     user?.firstname.charAt(0).toUpperCase() +
-      //     user?.firstname.slice(1) +
-      //     " " +
-      //     user?.lastname.charAt(0).toUpperCase() +
-      //     user?.lastname.slice(1),
-      //   username: user?.username,
-      //   avatar: user?.avatar,
-      //   status: "new",
-      //   verified: user?.verified,
-      //   createdAt: moment().format("MMM Do YY"),
-      // });
-      // if (res.status === 201) {
-      //   setLoading(false);
-      //   toast.success("Devit posted successfully");
-      //   setValue({
-      //     content: "",
-      //     code: "",
-      //     image: "",
-      //   });
-      //   setImg(null);
-      //   return window.location.reload();
-      // }
+        const devit = await database.createDocument(db_id, devit_id, uuidv4(), {
+          userid: user?.uid,
+          content: value.content,
+          code: value.code,
+          image: Object.keys(imageUrl).length === 0 ? imageUrl?.href : "",
+          name:
+            user?.firstname.charAt(0).toUpperCase() +
+            user?.firstname.slice(1) +
+            " " +
+            user?.lastname.charAt(0).toUpperCase() +
+            user?.lastname.slice(1),
+          username: user?.username,
+          avatar: user?.avatar,
+          status: "new",
+          verified: user?.verified,
+          createdAt: moment().format("MMM Do YY"),
+        });
+        if (devit?.$id !== null) {
+          setLoading(false);
+          toast.success("Devit posted successfully");
+          setValue({
+            content: "",
+            code: "",
+            image: "",
+          });
+          setImg(null);
+          return window.location.reload();
+        }
     } catch (error) {
       setLoading(false);
       console.log(error);
