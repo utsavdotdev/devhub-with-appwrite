@@ -37,11 +37,9 @@ const Discover = () => {
 
   const getAllDevits = async () => {
     try {
-      const res = await database.listDocuments(
-        db_id,
-        devit_id,
-        Query.orderAsc["timestamp"]
-      );
+      const res = await database.listDocuments(db_id, devit_id, [
+        Query.orderAsc("timestamp"),
+      ]);
       if (res) {
         setAllDevits(res?.documents);
       }

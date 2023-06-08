@@ -20,11 +20,10 @@ const Profile = () => {
 
   const fetchMyDevits = async () => {
     try {
-      const res = await database.listDocuments(
-        db_id,
-        devit_id,
-        Query["userid" == user?.uid]
-      );
+      const res = await database.listDocuments(db_id, devit_id, [
+        Query.equal("userid", token),
+      ]);
+      console.log(res);
       if (res?.documents?.length > 0) {
         setMyDevits(res?.documents);
       }
