@@ -77,11 +77,29 @@ const Post = ({ data }) => {
     toast.success("Copied to clipboard");
   };
 
+  const parsedArray = (array) => {
+    let parsed_array = [];
+    array.map((redevit) => {
+      parsed_array.push(JSON.parse(redevit));
+    });
+    return parsed_array;
+  };
+
   const handleLike = async () => {
     try {
       if (!like) {
+        let likes = data?.likes;
+        if (likes.length === 0) {
+          likes.push(`${user.uid}`);
+        } else {
+          data?.likes.map((like) => {
+            if (like !== token) {
+              likes.push(`${user.uid}`);
+            }
+          });
+        }
         const res = await database.updateDocument(db_id, devit_id, data?.$id, {
-          likes: [`${user.uid}`],
+          likes: likes,
         });
         if (res) {
           setLike(!like);
@@ -108,8 +126,22 @@ const Post = ({ data }) => {
   const handleReDevit = async () => {
     try {
       if (!reDevit) {
+        let redevits = data?.redevits;
+        const devits = parsedArray(redevits);
+        if (redevits.length === 0) {
+          redevits.push(`{"userid":"${user.uid}","name":"${user.username}"}`);
+        } else {
+          devits.map((redevit) => {
+            if (redevit.userid !== token) {
+              redevits.push(
+                `{"userid":"${user.uid}","name":"${user.username}"}`
+              );
+            }
+          });
+        }
+
         const res = await database.updateDocument(db_id, devit_id, data?.$id, {
-          redevits: [`{"userid":"${user.uid}","name":"${user.username}"}`],
+          redevits: redevits,
         });
         if (res) {
           setReDevit(!reDevit);
@@ -118,10 +150,7 @@ const Post = ({ data }) => {
         }
       } else {
         const redevits = data?.redevits;
-        let parsed_array = [];
-        redevits.map((redevit) => {
-          parsed_array.push(JSON.parse(redevit));
-        });
+        const parsed_array = parsedArray(redevits);
         const filtered = parsed_array.filter(
           (redevit) => redevit.userid !== token
         );

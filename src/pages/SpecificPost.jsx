@@ -46,7 +46,30 @@ const SpecificPost = () => {
 
   // create a comment
   const createComment = async () => {
-    
+    try {
+      let comments = data?.comments;
+      comments.push(`{
+        "userid": "${user?.uid}",
+        "username": "${user?.username}",
+        "avatar": "${user?.avatar}",
+        "comment": "${comment}",
+        "time": "${moment().format("MMMM Do YYYY, h:mm:ss a")}",
+        "timestamp": "${moment().unix()}",
+        "verified": ${user?.verified},
+        "name":"${user?.firstname} ${user?.lastname}"
+      }`);
+      const res = await database.updateDocument(db_id, devit_id, id, {
+        comments: comments,
+      });
+      if (res.$id) {
+        settrigger(!trigger);
+        setComment("");
+        toast.success("You replied to this devit");
+        window.location.reload();
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const config = genConfig(user?.avatar);

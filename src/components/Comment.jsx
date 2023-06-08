@@ -1,22 +1,34 @@
-import {
-  Avatar,
-  IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-} from "@pankod/refine-mui";
-import React from "react";
+import { IconButton, ListItemIcon, Menu, MenuItem } from "@pankod/refine-mui";
+import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { MdDelete, MdVerified } from "react-icons/md";
 import styles from "../css/components/Comment.module.css";
+import Avatar, { genConfig } from "react-nice-avatar";
+import { database } from "../appwrite/appwriteConfig";
 
 const Comment = ({ data }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const token = localStorage.getItem("token");
+  const [comments, setComments] = React.useState([]);
   const open = Boolean(anchorEl);
+
+  const db_id = import.meta.env.VITE_DATABASE_ID;
+  const devit_id = import.meta.env.VITE_DEVIT_COLLECTION_ID;
+
+  useEffect(() => {
+    parsingComments();
+  }, []);
+
+  const parsingComments = () => {
+    const comment = data?.comments;
+    const parsedComments = comment.map((comment) => {
+      return JSON.parse(comment);
+    });
+    setComments(parsedComments);
+  };
   // short array with latest timestam
-  const sortedComments = data.comments.sort((a, b) => {
+  const sortedComments = comments.sort((a, b) => {
     return b.timestamp - a.timestamp;
   });
 
@@ -29,32 +41,34 @@ const Comment = ({ data }) => {
   };
 
   const handleDelete = async (id) => {
-    
+    try {
+      let comments = data?.comments;
+      const filteredComments = comments.filter((comment) => {
+        const parsedComment = JSON.parse(comment);
+        return parsedComment.userid !== id;
+      });
+      const res = await database.updateDocument(db_id, devit_id, data?.$id, {
+        comments: filteredComments,
+      });
+      if (res) {
+        toast.success("Comment deleted successfully");
+        window.location.reload();
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <>
-      {sortedComments.map((comment, i) => {
-        const {
-          _id,
-          name,
-          userid,
-          avatar,
-          content,
-          timestamp,
-          actual_date,
-          verified,
-        } = comment;
+      {sortedComments.map((comm, i) => {
+        const { name, userid, avatar, comment, timestamp, time, verified } =
+          comm;
+        const config = genConfig(avatar);
         return (
-          <div className={styles.comment_container} key={_id}>
+          <div className={styles.comment_container} key={userid}>
             <div className={styles.left}>
-              <Avatar
-                src={avatar}
-                sx={{
-                  width: "45px",
-                  height: "45px",
-                }}
-              />
+              <Avatar style={{ width: "45px", height: "45px" }} {...config} />
             </div>
             <div className={styles.right}>
               <div className={styles.info}>
@@ -65,30 +79,30 @@ const Comment = ({ data }) => {
                   </span>
                 )}
                 <span className={styles.dot}></span>
-                <span className={styles.time}>{actual_date}</span>
+                <span className={styles.time}>{time}</span>
               </div>
-              <div className={styles.comment_text}>{content}</div>
+              <div className={styles.comment_text}>{comment}</div>
             </div>
             {/* {token === userid && ( */}
-              <IconButton
-                sx={{
-                  width: "30px",
-                  height: "30px",
-                  color: "text.light",
-                  position: "absolute",
-                  right: "5px",
-                  top: "5px",
-                  //make the primary hover color
-                  "&:hover": {
-                    color: "primary.main",
-                    //transparent green background
-                    backgroundColor: "rgba(29,161,242,0.1)",
-                  },
-                }}
-                onClick={handleClick}
-              >
-                <FiMoreHorizontal />
-              </IconButton>
+            <IconButton
+              sx={{
+                width: "30px",
+                height: "30px",
+                color: "text.light",
+                position: "absolute",
+                right: "5px",
+                top: "5px",
+                //make the primary hover color
+                "&:hover": {
+                  color: "primary.main",
+                  //transparent green background
+                  backgroundColor: "rgba(29,161,242,0.1)",
+                },
+              }}
+              onClick={handleClick}
+            >
+              <FiMoreHorizontal />
+            </IconButton>
             {/* )} */}
             <Menu
               id="devit-menu"
@@ -121,7 +135,7 @@ const Comment = ({ data }) => {
                 },
               }}
             >
-              <MenuItem onClick={() => handleDelete(_id)}>
+              <MenuItem onClick={() => handleDelete(userid)}>
                 <ListItemIcon
                   style={{
                     minWidth: "0px",
