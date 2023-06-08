@@ -1,4 +1,4 @@
-import { Avatar, Badge } from "@pankod/refine-mui";
+import { Badge } from "@pankod/refine-mui";
 import React, { useEffect, useContext } from "react";
 import SearchBox from "../components/SearchBox";
 import styles from "../css/pages/Discover.module.css";
@@ -7,26 +7,45 @@ import Loader from "../components/Loader";
 import { MdVerified, MdDelete } from "react-icons/md";
 import { ContextProvider } from "../config/Context";
 import { toast } from "react-hot-toast";
+import { database } from "../appwrite/appwriteConfig";
+import { Query } from "appwrite";
+import Avatar, { genConfig } from "react-nice-avatar";
 
 const Discover = () => {
   const [search, setSearch] = React.useState("");
-  const user = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [loading, setLoading] = React.useState(false);
   const [alldevits, setAllDevits] = React.useState([]);
   const [srhDevits, setSrhDevits] = React.useState([]);
   const [userLoading, setUserLoading] = React.useState(true);
   const [count, setCount] = React.useState(0);
 
+  const { userDetails } = useContext(ContextProvider);
+  const [user, setuser] = userDetails;
+  const [allUser, setallUser] = React.useState([]);
+
   //get the search query
   const query = new URLSearchParams(window.location.search);
   const q = query.get("q");
+
+  const db_id = import.meta.env.VITE_DATABASE_ID;
+  const devit_id = import.meta.env.VITE_DEVIT_COLLECTION_ID;
+  const users_id = import.meta.env.VITE_USER_COLLECTION_ID;
 
   useEffect(() => {
     getAllDevits();
   }, []);
 
   const getAllDevits = async () => {
-    
+    try {
+      const res = await database.listDocuments(
+        db_id,
+        devit_id,
+        Query.orderAsc["timestamp"]
+      );
+      if (res) {
+        setAllDevits(res?.documents);
+      }
+    } catch {}
   };
   useEffect(() => {
     if (srhDevits.length === 0) {
@@ -40,11 +59,17 @@ const Discover = () => {
     }
   }, [q]);
 
-  const [allUser, setallUser] = React.useState([]);
-
   useEffect(() => {
     const fetchallUser = async () => {
-      
+      try {
+        const res = await database.listDocuments(db_id, devit_id);
+        if (res?.documents?.length > 0) {
+          setallUser(res?.documents);
+          setUserLoading(false);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     };
 
     fetchallUser();
@@ -52,11 +77,22 @@ const Discover = () => {
 
   const handleSearch = async () => {
     if (search === "") return;
-    
-  };
-
-  const deleteUser = async (id, name) => {
-    
+    try {
+      setLoading(true);
+      const res = await database.listDocuments(db_id, devit_id, [
+        Query.search("content", search),
+      ]);
+      if (res) {
+        if (res.documents.length === 0) {
+          toast.error("No devits found");
+          return setLoading(false);
+        }
+        setSrhDevits(res.documents);
+        return setLoading(false);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -73,33 +109,30 @@ const Discover = () => {
           <Loader height="100px" size={30} />
         ) : (
           allUser.map((user) => (
-            <div
-              className={styles.user}
-              onClick={() => deleteUser(user?._id, user?.firstname)}
-            >
-              <Badge
-                overlap="circular"
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                badgeContent={
-                  user.verified && (
-                    <span className={styles.green_tick}>
-                      <MdVerified />
-                    </span>
-                  )
-                }
-              >
-                <Avatar
-                  src={user.avatar}
-                  sx={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "50%",
-                    border: "2px solid var(--primary)",
-                  }}
-                />
-              </Badge>
-              <span className={styles.user_info}>{user.firstname}</span>
-            </div>
+            <>
+              <div className={styles.user}>
+                <Badge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                  badgeContent={
+                    user?.verified && (
+                      <span className={styles.green_tick}>
+                        <MdVerified />
+                      </span>
+                    )
+                  }
+                >
+                  <Avatar
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                    }}
+                    {...genConfig(user.avatar)}
+                  />
+                </Badge>
+                <span className={styles.user_info}>{user?.username}</span>
+              </div>
+            </>
           ))
         )}
       </div>
