@@ -21,7 +21,6 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import Avatar, { genConfig } from "react-nice-avatar";
 import { database } from "../appwrite/appwriteConfig";
-import { Query } from "appwrite";
 
 const Post = ({ data }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -52,8 +51,12 @@ const Post = ({ data }) => {
   }, [data?.likes, token]);
 
   useEffect(() => {
-    //check if the token is equal to the array of reDevits object userid
-    data?.redevits?.map((reDevit) => {
+    const redevits = data?.redevits;
+    let parsed_array = [];
+    redevits.map((redevit) => {
+      parsed_array.push(JSON.parse(redevit));
+    });
+    parsed_array.map((reDevit) => {
       if (reDevit.userid === token) {
         setReDevit(true);
       }
@@ -102,9 +105,51 @@ const Post = ({ data }) => {
     }
   };
 
-  const handleReDevit = async () => {};
+  const handleReDevit = async () => {
+    try {
+      if (!reDevit) {
+        const res = await database.updateDocument(db_id, devit_id, data?.$id, {
+          redevits: [`{"userid":"${user.uid}","name":"${user.username}"}`],
+        });
+        if (res) {
+          setReDevit(!reDevit);
+          setReDevitCount(res.redevits.length);
+          toast.success("Redevited");
+        }
+      } else {
+        const redevits = data?.redevits;
+        let parsed_array = [];
+        redevits.map((redevit) => {
+          parsed_array.push(JSON.parse(redevit));
+        });
+        const filtered = parsed_array.filter(
+          (redevit) => redevit.userid !== token
+        );
+        const res = await database.updateDocument(db_id, devit_id, data?.$id, {
+          redevits: filtered,
+        });
+        if (res) {
+          setReDevit(!reDevit);
+          setReDevitCount(res.redevits.length);
+          toast.success("UnRedevited");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const handleDelete = async () => {};
+  const handleDelete = async () => {
+    try {
+      const res = await database.deleteDocument(db_id, devit_id, data?.$id);
+      if (res) {
+        toast.success("Deleted");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const goLink = `/devit/${data?.$id}`;
 

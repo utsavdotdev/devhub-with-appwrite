@@ -45,7 +45,9 @@ const SpecificPost = () => {
   };
 
   // create a comment
-  const createComment = async () => {};
+  const createComment = async () => {
+    
+  };
 
   const config = genConfig(user?.avatar);
 
