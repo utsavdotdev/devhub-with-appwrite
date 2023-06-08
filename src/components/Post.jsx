@@ -20,7 +20,8 @@ import { toast } from "react-hot-toast";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import Avatar, { genConfig } from "react-nice-avatar";
-
+import { database } from "../appwrite/appwriteConfig";
+import { Query } from "appwrite";
 
 const Post = ({ data }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -36,14 +37,15 @@ const Post = ({ data }) => {
   );
   const { userDetails } = useContext(ContextProvider);
   const [user, setUser] = userDetails;
+  const config = genConfig(data?.avatar);
 
-    const config = genConfig(data?.avatar);
-
+  const db_id = import.meta.env.VITE_DATABASE_ID;
+  const devit_id = import.meta.env.VITE_DEVIT_COLLECTION_ID;
 
   useEffect(() => {
     //check if the token is equal to the array of likes object userid
     data?.likes?.map((like) => {
-      if (like.userid === token) {
+      if (like === token) {
         setLike(true);
       }
     });
@@ -73,16 +75,36 @@ const Post = ({ data }) => {
   };
 
   const handleLike = async () => {
-    
+    try {
+      if (!like) {
+        const res = await database.updateDocument(db_id, devit_id, data?.$id, {
+          likes: [`${user.uid}`],
+        });
+        if (res) {
+          setLike(!like);
+          setLikeCount(res.likes.length);
+          toast.success("Liked");
+        }
+      } else {
+        const likes = data?.likes;
+        const filtered = likes.filter((like) => like !== token);
+        const res = await database.updateDocument(db_id, devit_id, data?.$id, {
+          likes: filtered,
+        });
+        if (res) {
+          setLike(!like);
+          setLikeCount(res.likes.length);
+          toast.success("Unliked");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleReDevit = async () => {
-    
-  };
+  const handleReDevit = async () => {};
 
-  const handleDelete = async () => {
-   
-  };
+  const handleDelete = async () => {};
 
   const goLink = `/devit/${data?.$id}`;
 
