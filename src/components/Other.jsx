@@ -23,29 +23,26 @@ const Other = () => {
       if (res) {
         let topTrends = [];
         res?.documents?.map((data) => {
-          //check the content contains hashtag or not
           if (data.content.includes("#")) {
             const content = data.content.split(" ");
             content.map((word) => {
-              //check the word contains hashtag or not and find top #hashtag and push to array and at last set the state
               if (word.includes("#")) {
                 const hashtag = word.replace("#", "");
-                const find = topTrends.find((trend) => trend.trend === hashtag);
-                if (find) {
-                  find.count = find.count + 1;
-                } else {
-                  topTrends.push({
-                    trend: "#" + hashtag,
-                    count: 1,
-                  });
+                const index = topTrends.findIndex(
+                  (trend) => trend.trend === hashtag
+                );
+                if (index === -1) {
+                  topTrends.push({ trend: hashtag, count: 1 });
                 }
+                if (index !== -1) {
+                  topTrends[index].count += 1;
+                }
+                return;
               }
             });
           }
         });
-        setTrends({
-          topTrends: topTrends.sort((a, b) => b.count - a.count).slice(0, 5),
-        });
+        setTrends(topTrends.sort((a, b) => b.count - a.count));
       }
     } catch (error) {
       console.log(error);
@@ -68,10 +65,10 @@ const Other = () => {
         )}
         <div className={styles.trends_container}>
           <span className={styles.trend_title}>Trends for you</span>
-          {trends.topTrends?.length > 0 ? (
-            trends.topTrends?.map((trend) => (
+          {trends?.length > 0 ? (
+            trends?.map((trend) => (
               <div className={styles.trend}>
-                <span className={styles.trend_name}>{trend.trend}</span>
+                <span className={styles.trend_name}>{"#" + trend.trend}</span>
                 <span className={styles.trend_count}>{trend.count} devits</span>
               </div>
             ))

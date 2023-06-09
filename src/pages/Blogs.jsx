@@ -3,6 +3,7 @@ import BlogCard from "../components/BlogCard";
 import PageTop from "../components/PageTop";
 import Loader from "../components/Loader";
 import { database } from "../appwrite/appwriteConfig";
+import { Query } from "appwrite";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState([]);
@@ -16,7 +17,9 @@ const Blogs = () => {
 
   const getBlogs = async () => {
     try {
-      const res = await database.listDocuments(db_id, blog_id);
+      const res = await database.listDocuments(db_id, blog_id, [
+        Query.limit(8),
+      ]);
       if (res?.documents?.length > 0) {
         setLoading(false);
         setBlogs(res.documents);
