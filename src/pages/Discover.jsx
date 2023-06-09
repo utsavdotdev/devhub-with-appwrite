@@ -60,7 +60,7 @@ const Discover = () => {
   useEffect(() => {
     const fetchallUser = async () => {
       try {
-        const res = await database.listDocuments(db_id, devit_id);
+        const res = await database.listDocuments(db_id, users_id);
         if (res?.documents?.length > 0) {
           setallUser(res?.documents);
           setUserLoading(false);
@@ -125,7 +125,7 @@ const Discover = () => {
                       width: "50px",
                       height: "50px",
                     }}
-                    {...genConfig(user.avatar)}
+                    {...genConfig(user?.avatar)}
                   />
                 </Badge>
                 <span className={styles.user_info}>{user?.username}</span>

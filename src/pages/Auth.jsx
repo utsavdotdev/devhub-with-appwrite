@@ -7,12 +7,13 @@ import { SiCodemagic } from "react-icons/si";
 import { account } from "../appwrite/appwriteConfig";
 import { toast } from "react-hot-toast";
 import { ContextProvider } from "../config/Context";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 const Auth = () => {
   const { userDetails } = useContext(ContextProvider);
   const [user, setuser] = userDetails;
   const token = localStorage.getItem("token");
+  const url = import.meta.env.VITE_URL;
 
   if (token) {
     return <Navigate to="/app" replace />;
@@ -24,8 +25,8 @@ const Auth = () => {
     try {
       const res = account.createOAuth2Session(
         "google",
-        `http://localhost:5173/complete/${uid}`,
-        "http://localhost:5173/join"
+        `${url}/complete/${uid}`,
+        `${url}/join`
       );
     } catch (e) {
       toast.error("Something went wrong!");
