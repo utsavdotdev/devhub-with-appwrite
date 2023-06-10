@@ -1,18 +1,36 @@
 {
-  "projectId": "645e01c1c2b3de057a27",
-  "projectName": "Devhub ",
-  "functions": [
-    {
-      "$id": "647dbec7bc497d6e23ed",
-      "name": "Blogs crawler",
-      "runtime": "node-16.0",
-      "path": "functions/Blogs crawler",
-      "entrypoint": "src/index.js",
-      "ignore": ["node_modules", ".npm"],
-      "execute": [],
-      "events": [],
-      "schedule": "*/15 * * * *",
-      "timeout": 100
-    }
-  ]
+    "projectId": "645e01c1c2b3de057a27",
+    "projectName": "Devhub ",
+    "functions": [
+        {
+            "$id": "647dbec7bc497d6e23ed",
+            "name": "Blogs crawler",
+            "runtime": "node-16.0",
+            "path": "functions/Blogs crawler",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "*/15 * * * *",
+            "timeout": 100
+        },
+        {
+            "$id": "6484836c316ad4d89a98",
+            "name": "hacks-crawler",
+            "runtime": "node-16.0",
+            "path": "functions/hacks-crawler",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "*/15 * * * *",
+            "timeout": 100
+        }
+    ]
 }
