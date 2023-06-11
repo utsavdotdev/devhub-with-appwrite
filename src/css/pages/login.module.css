@@ -40,7 +40,7 @@
   color: #c1c1c1;
 }
 
-form {
+form,.form_wrapper {
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -48,6 +48,11 @@ form {
   margin-top: 30px;
   gap: 20px;
 }
+/* .form_wrapper{
+  /* padding: 1rem;
+  border-radius: 5px;
+  border:2px solid #344454; 
+} */
 
 /* selct placeholder of input */
 .form_auth input::placeholder {
