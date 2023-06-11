@@ -126,14 +126,17 @@ const Post = ({ data }) => {
   const handleReDevit = async () => {
     try {
       if (!reDevit) {
-        let redevits = data?.redevits;
-        const devits = parsedArray(redevits);
-        if (redevits.length === 0) {
-          redevits.push(`{"userid":"${user.uid}","name":"${user.username}"}`);
+        const devits = parsedArray(data?.redevits);
+        let unique = devits.filter((devit) => devit.userid !== token);
+        const unique_array = unique.map((data) => JSON.stringify(data));
+        if (unique.length === 0) {
+          unique_array.push(
+            `{"userid":"${user.uid}","name":"${user.username}"}`
+          );
         } else {
-          devits.map((redevit) => {
-            if (redevit.userid !== token) {
-              redevits.push(
+          unique.map((devit) => {
+            if (devit.userid !== token) {
+              unique_array.push(
                 `{"userid":"${user.uid}","name":"${user.username}"}`
               );
             }
@@ -141,7 +144,7 @@ const Post = ({ data }) => {
         }
 
         const res = await database.updateDocument(db_id, devit_id, data?.$id, {
-          redevits: redevits,
+          redevits: unique_array,
         });
         if (res) {
           setReDevit(!reDevit);
@@ -149,13 +152,14 @@ const Post = ({ data }) => {
           toast.success("Redevited");
         }
       } else {
-        const redevits = data?.redevits;
-        const parsed_array = parsedArray(redevits);
+        let redevs = data?.redevits;
+        const parsed_array = parsedArray(redevs);
         const filtered = parsed_array.filter(
           (redevit) => redevit.userid !== token
         );
+        const normalString = filtered.map((data) => JSON.stringify(data));
         const res = await database.updateDocument(db_id, devit_id, data?.$id, {
-          redevits: filtered,
+          redevits: normalString,
         });
         if (res) {
           setReDevit(!reDevit);
@@ -408,7 +412,7 @@ const Post = ({ data }) => {
                   },
                 }}
                 className={styles.icon}
-                onClick={handleLike}
+                onClick={() => handleLike()}
               >
                 {like ? <AiFillHeart /> : <AiOutlineHeart />}
               </IconButton>
@@ -430,7 +434,7 @@ const Post = ({ data }) => {
                   },
                 }}
                 className={styles.icon}
-                onClick={handleReDevit}
+                onClick={() => handleReDevit()}
               >
                 <AiOutlineRetweet />
               </IconButton>
