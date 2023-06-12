@@ -4,7 +4,7 @@ import { ContextProvider } from "../config/Context";
 import style from "../css/components/ProfileHeader.module.css";
 import { account } from "../appwrite/appwriteConfig";
 import Avatar, { genConfig } from "react-nice-avatar";
-
+import { toast } from "react-hot-toast";
 
 const ProfileHeader = () => {
   const { userDetails } = useContext(ContextProvider);
@@ -46,6 +46,9 @@ const ProfileHeader = () => {
                 "&:hover": {
                   backgroundColor: "#344454",
                 },
+              }}
+              onClick={() => {
+                toast.error("This feature is not available yet");
               }}
             >
               Edit Profile

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../css/pages/Hero.module.css";
 import { Button } from "@pankod/refine-mui";
 import { BsArrowRight, BsMicFill, BsFillBookFill } from "react-icons/bs";
-import { FaPencilAlt, FaUserAstronaut } from "react-icons/fa";
+import { FaPencilAlt, FaUserAstronaut,FaLightbulb } from "react-icons/fa";
 import { BiGlobe } from "react-icons/bi";
 import { RiOpenSourceFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
@@ -20,9 +20,9 @@ const Hero = () => {
       desc: "You can view and join popular hackathons.",
     },
     {
-      icon: <BsMicFill />,
-      title: "Connect in Voice Channels",
-      desc: "You can connect with other developers in voice channels.",
+      icon: <FaLightbulb />,
+      title: "Share ideas",
+      desc: "You can share idea with other developers througs post,comments etc",
     },
     {
       icon: <BsFillBookFill />,
@@ -58,7 +58,7 @@ const Hero = () => {
             in <span className={styles.glow}>`Voice Channels`</span>, and Much
             More.
           </div>
-          <NavLink to="/app">
+          <NavLink to="/join">
             <Button
               size="medium"
               variant="contained"
@@ -68,8 +68,8 @@ const Hero = () => {
                 fontWeight: "500",
                 textTransform: "none",
                 backgroundColor: "var(--primary)",
-                fontSize: "16px",
-                padding: "7px 15px",
+                fontSize: "18px",
+                padding: "12px 25px",
                 mt: "3rem",
                 // "&:hover": {
                 //   backgroundColor: "var(--light-primary)",
