@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { pics } from "../config/data";
 import { toast } from "react-hot-toast";
 import moment from "moment";
+import { Query } from "appwrite";
 
 const DataCollection = () => {
   let token = localStorage.getItem("token");
@@ -71,15 +72,21 @@ const DataCollection = () => {
   };
 
   const handleSubmit = async (e) => {
+    if (
+      details.firstname === "" ||
+      details.lastname === "" ||
+      details.bio === "" ||
+      details.username === "" ||
+      details.email === ""
+    ) {
+      return toast.error("Please fill all the fields");
+    }
     try {
-      if (
-        details.firstname === "" ||
-        details.lastname === "" ||
-        details.bio === "" ||
-        details.username === "" ||
-        details.email === ""
-      ) {
-        return toast.error("Please fill all the fields");
+      const check = await database.listDocuments(db_id, user_id, [
+        Query.equal("username", details.username),
+      ]);
+      if (check.documents.length > 0) {
+        return toast.error("Username already exists");
       }
       const res = await database.createDocument(db_id, user_id, uuidv4(), {
         uid: id,
@@ -95,7 +102,7 @@ const DataCollection = () => {
       if (res.$id) {
         toast.success("User created successfully!");
         localStorage.setItem("token", id);
-        navigate("/app", { replace: true });
+        window.location.href = "/app";
       }
     } catch (error) {
       console.log(error);
