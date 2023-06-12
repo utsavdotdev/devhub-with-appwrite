@@ -39,7 +39,7 @@ export default function Router() {
         { path: "hackathons", element: <Hackathons /> },
         { path: "blogs", element: <Blogs /> },
         { path: "profile", element: <Profile /> },
-        { path: "api", element: <Api /> },
+        { path: "setting", element: <Api /> },
         { path: "devit/:id", element: <SpecificPost /> },
       ],
     },

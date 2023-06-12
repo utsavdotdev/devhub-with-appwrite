@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import ApiRevoke from "../components/ApiRevoke";
 import PageTop from "../components/PageTop";
-import ApiReadme from "../components/ApiReadme";
 import { ContextProvider } from "../config/Context";
 
 const Api = () => {
@@ -9,9 +8,9 @@ const Api = () => {
   const [user, setUser] = userDetails;
   return (
     <>
-      <PageTop label="Api Key" />
+      <PageTop label="Setting" />
       <ApiRevoke />
-      {user?.apiKey !== "" && <ApiReadme />}
+      {/* {user?.apiKey !== "" && <ApiReadme />} */}
     </>
   );
 };

@@ -51,10 +51,10 @@ const Sidebar = () => {
       link: "/profile",
     },
     {
-      name: "Api Key",
+      name: "Setting",
       icon2: <IoSettingsSharp />,
       icon1: <IoSettingsOutline />,
-      link: "/api",
+      link: "/setting",
     },
   ];
 
