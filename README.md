@@ -11,7 +11,7 @@ DevHub is a dynamic web application designed to connect and showcase developers'
    - Backend: Node.js
    - Appwrite Cloud Services: Database, Authentication, Functions, Storage
 
-## Why Appwrite
+## Why Appwrijte
 
 Appwrite provided the perfect backend tech stack for DevHub, offering user-friendly authentication, fast database management, and efficient storage and function services.
 

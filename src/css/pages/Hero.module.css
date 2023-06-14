@@ -124,3 +124,41 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+
+.footer_con{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    flex-wrap: wrap;
+}
+.footer_con p{
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffff;
+}
+.footer_con p span{
+    color: gray;
+    cursor: pointer;
+}
+.to{
+    font-size: 20px;
+    display: flex;
+    gap: 6px;
+}
+.to_link{
+   text-decoration: underline; 
+   color: #ccc;
+}
+
+@media screen and (max-width: 830px){
+    .footer_con{
+        align-items: center;
+        justify-content: center;
+    }
+    .to{
+        gap: 0.5rem;
+        margin-inline: 1rem;
+    }
+}

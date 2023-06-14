@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../css/pages/Hero.module.css";
 import { Button } from "@pankod/refine-mui";
 import { BsArrowRight, BsMicFill, BsFillBookFill } from "react-icons/bs";
-import { FaPencilAlt, FaUserAstronaut,FaLightbulb } from "react-icons/fa";
+import { FaPencilAlt, FaUserAstronaut, FaLightbulb } from "react-icons/fa";
 import { BiGlobe } from "react-icons/bi";
 import { RiOpenSourceFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
@@ -108,14 +108,37 @@ const Hero = () => {
               <span className={styles.feature_desc}>{feature.desc}</span>
             </div>
           ))}
-          {/* <div className={styles.feature_box}>
-            <FaPencilAlt color="#fff" size={"26"} />
-            <span className={styles.feature_title}>Post Devit(Dev Post)</span>
-            <span className={styles.feature_desc}>
-              You can post your devit,code snippets,images etc
-            </span>
-          </div> */}
         </div>
+      </div>
+
+      <div className={styles.footer_con}>
+        <p>
+          devhubs.tech <span>&#169; All right reserved</span>
+        </p>
+        <p className={styles.to}>
+          Thanks to{" "}
+          <a
+            href="https://appwrite.io"
+            target="_blank"
+            className={styles.to_link}
+          >
+            Appwrite
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://hashnode.com"
+            target="_blank"
+            className={styles.to_link}
+          >
+            Hashnode
+          </a>
+        </p>
+        <p>
+          Made with 💖 by{" "}
+          <a href="https://twitter.com/utsavbhatrai007" target={"_blank"}>
+            <span>&#64;utsav</span>
+          </a>
+        </p>
       </div>
     </>
   );
