@@ -134,10 +134,7 @@ const Hero = () => {
           </a>
         </p>
         <p>
-          Made with 💖 by{" "}
-          <a href="https://twitter.com/utsavbhatrai007" target={"_blank"}>
-            <span>&#64;utsav</span>
-          </a>
+          Made with 💖
         </p>
       </div>
     </>
